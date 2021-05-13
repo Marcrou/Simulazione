@@ -26,9 +26,10 @@ class Immobile():
         self.prezzo = prezzo
         self.catalogo = catalogo
 
-    def inserimento(self, lista, Catalogo):
+    def inserimento(self, lista, catalogo):
         lista.append(self)
-        Catalogo.lista.append(self)
+        catalogo.Lista.append(self)
+
         print ("immobile aggiunto con successo")
 
     def modifica(self):
@@ -51,17 +52,23 @@ class Immobile():
     def stampa(self):
         print("Proprietario: %s \nIndirizzo: %s \nPrezzo: %s"  %(self.proprietario, self.indirizzo, self.prezzo))
 
+    def database(self):
+        conn.execute('insert into  immobili (proprietario, indirizzo, prezzo, nome_catalogo) values (?,?,?,?)', (self.proprietario,self.indirizzo,self.prezzo,self.catalogo) )
 
 ListaImmobili = []
 
 #Creo i cataloghi e gli immobili
+
 CatPrestigio = Catalogo("Prestigio", "500", "100000")
 CatVacanza = Catalogo("Vacanza", "500", "1500")
 CatPop = Catalogo("Popolari", "200", "800")
 
+#
+
 myImmobile = Immobile("Marco", "via via 7", "2000", "Prestigio")
-myImmobile.inserimento(ListaImmobili, Catalogo)
-myImmobile.inserimento(ListaImmobili)
+myImmobile.inserimento(ListaImmobili, CatPrestigio)
+myImmobile.inserimento(ListaImmobili, CatPrestigio)
+
 myImmobile.modifica()
 myImmobile.cancellazione(ListaImmobili)
 
@@ -77,7 +84,8 @@ for im in ListaImmobili:
 for im in ListaImmobili:
     im.stampa()
 
-
+for im in ListaImmobili:
+    im.database()
 
 for im in ListaImmobili:
     im.stampa()
